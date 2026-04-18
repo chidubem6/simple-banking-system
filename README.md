@@ -1,8 +1,3 @@
-Here’s a clean, GitHub-ready `README.md`. You can copy this directly.
-
----
-
-```md
 # 💳 Simple Banking System (C++)
 
 ## 📌 Overview
