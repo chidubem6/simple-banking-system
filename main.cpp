@@ -48,8 +48,8 @@ int main() {
                     std::cout << "1. Deposit\n";
                     std::cout << "2. Withdraw\n";
                     std::cout << "3. Transfer\n";
-                    std::cout << "3. Check Balance\n";
-                    std::cout << "4. Logout\n";
+                    std::cout << "4. Check Balance\n";
+                    std::cout << "5. Logout\n";
                     std::cin >> loginChoice;
 
                     if (loginChoice == 1) {
@@ -65,10 +65,21 @@ int main() {
                         user->withdraw(amount);
                     }
                     else if (loginChoice == 3) {
+                        int receiverAccNum;
+                        int amount;
+
+                        std::cout << "Enter account number: ";
+                        std::cin >> receiverAccNum;
+
+                        std::cout << "Enter the amount: ";
+                        std::cin >> amount;
+                        bank.transfer(user->getAccountNumber(), receiverAccNum, amount);
+                    }
+                    else if (loginChoice == 4) {
                         std::cout << user->getBalance() << "\n";
                     }
 
-                } while (loginChoice != 4);
+                } while (loginChoice != 5);
 
             } else {
                 std::cout << "Invalid login.\n";
