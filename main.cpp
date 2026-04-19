@@ -50,6 +50,7 @@ int main() {
                     std::cout << "3. Transfer\n";
                     std::cout << "4. Check Balance\n";
                     std::cout << "5. Logout\n";
+                    std::cout << "Enter choice: ";
                     std::cin >> loginChoice;
 
                     if (loginChoice == 1) {
