@@ -14,7 +14,7 @@ class Bank {
 
         Account* logIn(int accNum, const std::string& inputPin);
 
-        bool transfer(int senderAccNum, int receiverAccNum, double amount);
+        void transfer(int senderAccNum, int receiverAccNum, double amount);
 };
 
 #endif

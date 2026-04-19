@@ -29,22 +29,21 @@ Account* Bank::logIn(int accNum, const std::string& inputPin) {
     
 }
 
-bool Bank::transfer(int senderAccNum, int receiverAccNum, double amount) {
-    /* Check if sender and receiver account exists
-    Sender.withdraw(amount)
-    Receiver.deposit(amount)
-    */
-
+void Bank::transfer(int senderAccNum, int receiverAccNum, double amount) {
     Account* sender = findAccount(senderAccNum);
     Account* receiver = findAccount(receiverAccNum);
 
     if (sender != nullptr && receiver != nullptr) {
-        sender->withdraw(amount);
-        receiver->deposit(amount);
-        return true;
+        if (sender->withdraw(amount)) {
+            receiver->deposit(amount);
+            std::cout << "Transfer successful. $" << amount << " was sent to " << receiver->getName() << "\n";
+        } else {
+            std::cout << "Insufficient Balance";
+        }
+        
 
+    } else {
+        std::cout << "Transfer unsuccessful.\n" ;
     }
-
-    return false;
 }
 
