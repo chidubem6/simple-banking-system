@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include "Bank.h"
 #include "Transaction.h"
 
@@ -51,3 +53,49 @@ void Bank::transfer(int senderAccNum, int receiverAccNum, double amount) {
     }
 }
 
+void Bank::saveToFile(const std::string& filename) {
+    // Implementation for saving accounts and transactions to a file
+    std::ofstream file(filename);
+
+    if (!file) {
+        std::cerr << "Error opening file for writing: " << filename << std::endl;
+        return;
+    }
+
+    for (const auto& account : accounts) {
+        file << account.getAccountNumber() << "," 
+        << account.getName() << "," 
+        << account.getPin() << "," 
+        << account.getBalance() 
+        << "\n";
+    }
+
+    file.close();
+}
+
+void Bank::loadFromFile(const std::string& filename) {
+    // Implementation for loading accounts and transactions from a file
+    std::ifstream file(filename);
+
+   
+
+    if (!file) {
+        std::cerr << "Error opening file for reading: " << filename << std::endl;
+        return;
+    }
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::string accNum, name, pin, balance;
+
+        std::istringstream accountLine(line);
+        
+        std::getline(accountLine, accNum, ',');
+        std::getline(accountLine, name, ',');
+        std::getline(accountLine, pin, ',');
+        std::getline(accountLine, balance, ',');
+
+        createAccount(std::stoi(accNum), name, pin, std::stod(balance));
+    }
+    file.close();
+}

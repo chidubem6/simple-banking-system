@@ -22,6 +22,7 @@ class Account {
         const std::string& getName() const { return name; }
         double getBalance() const { return balance; }
         void setBalance(double newBalance) { balance = newBalance; }
+        const std::string& getPin() const { return pin; }
 
         bool verifyPin(const std::string& inputPin) const { return inputPin == pin; }
 
