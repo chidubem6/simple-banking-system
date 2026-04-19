@@ -19,15 +19,13 @@ Account* Bank::findAccount(int accNum) {
     } return nullptr;
 };
 
-void Bank::logIn(int accNum, const std::string& inputPin) {
+Account* Bank::logIn(int accNum, const std::string& inputPin) {
     Account* account = findAccount(accNum);
 
     if (account != nullptr && account->verifyPin(inputPin)) {
-        std::cout << "Successful login. Pin matches." << "\n";
-        std::cout << "Welcome, " << account->getName()  << "\n";
-    } else {
-        std::cout << "Unsuccessful login.";
+        return account;
     }
-
+    return nullptr;
+    
 }
 

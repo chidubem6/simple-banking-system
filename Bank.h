@@ -12,7 +12,7 @@ class Bank {
         void createAccount(int accNum, const std::string& accName, const std::string& accPin, double accBalance);
         Account* findAccount(int accNum);
 
-        void logIn(int accNum, const std::string& inputPin);
+        Account* logIn(int accNum, const std::string& inputPin);
 };
 
 #endif
