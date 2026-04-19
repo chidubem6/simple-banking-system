@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Bank.h"
+#include "Transaction.h"
 
 void Bank::createAccount(int accNum, const std::string& accName, const std::string& accPin, double accBalance) {
     if (findAccount(accNum)) {
@@ -34,11 +35,14 @@ void Bank::transfer(int senderAccNum, int receiverAccNum, double amount) {
     Account* receiver = findAccount(receiverAccNum);
 
     if (sender != nullptr && receiver != nullptr) {
-        if (sender->withdraw(amount)) {
-            receiver->deposit(amount);
+        if (sender->getBalance() >= amount) {
+            sender->setBalance(sender->getBalance() - amount);
+            receiver->setBalance(receiver->getBalance() + amount);
+            sender->addTransaction(Transaction("Transfer Out", amount, "Sent to " + receiver->getName(), sender->getBalance()));
+            receiver->addTransaction(Transaction("Transfer In", amount, "Received from " + sender->getName(), receiver->getBalance()));
             std::cout << "Transfer successful. $" << amount << " was sent to " << receiver->getName() << "\n";
         } else {
-            std::cout << "Insufficient Balance";
+            std::cout << "Insufficient Balance\n";
         }
         
 
