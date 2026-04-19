@@ -10,7 +10,7 @@ void Bank::createAccount(int accNum, const std::string& accName, const std::stri
 
     } else {
         accounts.push_back(Account(accNum, accName, accPin, accBalance));
-        std::cout << "Account creation sucessful." << "\n";
+        std::cout << "Account creation successful." << "\n";
     }
 };
 
