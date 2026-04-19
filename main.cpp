@@ -3,6 +3,7 @@
 
 int main() {
     Bank bank;
+    bank.loadFromFile("accounts.txt");
     int choice;
 
     do {
@@ -49,25 +50,32 @@ int main() {
                     std::cout << "2. Withdraw\n";
                     std::cout << "3. Transfer\n";
                     std::cout << "4. Check Balance\n";
-                    std::cout << "5. Logout\n";
+                    std::cout << "5. Transaction History\n";
+                    std::cout << "6. Logout\n";
                     std::cout << "Enter choice: ";
                     std::cin >> loginChoice;
 
                     if (loginChoice == 1) {
                         double amount;
-                        std::cout << "Input deposit amount: \n" ;
+                        std::cout << "Input deposit amount: ";
                         std::cin >> amount;
-                        user->deposit(amount);
+                        if (user->deposit(amount))
+                            std::cout << "Deposit successful.\n";
+                        else
+                            std::cout << "Deposit failed. Amount must be greater than 0.\n";
                     }
                     else if (loginChoice == 2) {
                         double amount;
-                        std::cout << "Input withdraw amount: \n" ;
+                        std::cout << "Input withdraw amount: ";
                         std::cin >> amount;
-                        user->withdraw(amount);
+                        if (user->withdraw(amount))
+                            std::cout << "Withdrawal successful.\n";
+                        else
+                            std::cout << "Withdrawal failed. Insufficient balance or invalid amount.\n";
                     }
                     else if (loginChoice == 3) {
                         int receiverAccNum;
-                        int amount;
+                        double amount;
 
                         std::cout << "Enter account number: ";
                         std::cin >> receiverAccNum;
@@ -77,10 +85,13 @@ int main() {
                         bank.transfer(user->getAccountNumber(), receiverAccNum, amount);
                     }
                     else if (loginChoice == 4) {
-                        std::cout << user->getBalance() << "\n";
+                        std::cout << "Balance: $" << user->getBalance() << "\n";
+                    }
+                    else if (loginChoice == 5) {
+                        user->showTransactionHistory();
                     }
 
-                } while (loginChoice != 5);
+                } while (loginChoice != 6);
 
             } else {
                 std::cout << "Invalid login.\n";
@@ -88,5 +99,6 @@ int main() {
         }
     } while (choice != 3);
 
+    bank.saveToFile("accounts.txt");
     return 0;
 }

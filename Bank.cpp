@@ -77,8 +77,6 @@ void Bank::loadFromFile(const std::string& filename) {
     // Implementation for loading accounts and transactions from a file
     std::ifstream file(filename);
 
-   
-
     if (!file) {
         std::cerr << "Error opening file for reading: " << filename << std::endl;
         return;
