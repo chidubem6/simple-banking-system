@@ -13,6 +13,8 @@ class Bank {
         Account* findAccount(int accNum);
 
         Account* logIn(int accNum, const std::string& inputPin);
+
+        bool transfer(int senderAccNum, int receiverAccNum, double amount);
 };
 
 #endif

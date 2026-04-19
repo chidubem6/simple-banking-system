@@ -47,6 +47,7 @@ int main() {
                 do {
                     std::cout << "1. Deposit\n";
                     std::cout << "2. Withdraw\n";
+                    std::cout << "3. Transfer\n";
                     std::cout << "3. Check Balance\n";
                     std::cout << "4. Logout\n";
                     std::cin >> loginChoice;

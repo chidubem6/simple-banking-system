@@ -29,3 +29,22 @@ Account* Bank::logIn(int accNum, const std::string& inputPin) {
     
 }
 
+bool Bank::transfer(int senderAccNum, int receiverAccNum, double amount) {
+    /* Check if sender and receiver account exists
+    Sender.withdraw(amount)
+    Receiver.deposit(amount)
+    */
+
+    Account* sender = findAccount(senderAccNum);
+    Account* receiver = findAccount(receiverAccNum);
+
+    if (sender != nullptr && receiver != nullptr) {
+        sender->withdraw(amount);
+        receiver->deposit(amount);
+        return true;
+
+    }
+
+    return false;
+}
+
