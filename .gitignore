@@ -1,0 +1,10 @@
+# Compiled output
+*.exe
+*.obj
+*.o
+*.pdb
+*.ilk
+*.out
+
+# VSCode
+.vscode/
