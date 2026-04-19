@@ -28,7 +28,6 @@ int main() {
             std::cin >> balance;
 
             bank.createAccount(accNum, name, pin, balance);
-            std::cout << "Account created successfully.\n";
         }
         else if (choice == 2) {
             int accNum;
@@ -39,7 +38,13 @@ int main() {
             std::cout << "Enter PIN: ";
             std::cin >> pin;
 
-            bank.logIn(accNum, pin);
+            Account* user = bank.logIn(accNum, pin);
+
+            if (user != nullptr) {
+                std::cout << "Login successful. Welcome, " << user->getName() << "\n";
+            } else {
+                std::cout << "Invalid login.\n";
+            }
         }
 
     } while (choice != 3);
