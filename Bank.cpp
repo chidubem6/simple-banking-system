@@ -90,18 +90,28 @@ void Bank::loadFromFile(const std::string& filename) {
         return;
     }
 
+    Account* currentAccount = nullptr;
     std::string line;
+
     while (std::getline(file, line)) {
-        std::string accNum, name, pin, balance;
+        std::istringstream ss(line);
+        std::string firstField;
+        std::getline(ss, firstField, ',');
 
-        std::istringstream accountLine(line);
-        
-        std::getline(accountLine, accNum, ',');
-        std::getline(accountLine, name, ',');
-        std::getline(accountLine, pin, ',');
-        std::getline(accountLine, balance, ',');
+        try {
+            // try treating it as an account line
+            int accNum = std::stoi(firstField);
+            // parse remaining fields: name, pin, balance
+            // call createAccount
+            // set currentAccount = findAccount(accNum)
 
-        createAccount(std::stoi(accNum), name, pin, std::stod(balance));
+        } catch (std::exception& e) {
+            // it's a transaction line
+            // firstField is already the type
+            // parse: amount, details, resultingBalance
+            // if currentAccount != nullptr, addTransaction
+        }
+    }
 
         try {
             while (std::getline(file, line) && !line.empty()) {
@@ -122,5 +132,6 @@ void Bank::loadFromFile(const std::string& filename) {
             std::cerr << "Error parsing transaction data: " << e.what() << std::endl;
         }
     }
+    
     file.close();
 }
