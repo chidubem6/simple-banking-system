@@ -68,6 +68,14 @@ void Bank::saveToFile(const std::string& filename) {
         << account.getPin() << "," 
         << account.getBalance() 
         << "\n";
+
+        for (const auto& transaction : account.getTransactionHistory()) {
+            file << transaction.getType() << "," 
+            << transaction.getAmount() << "," 
+            << transaction.getDetails() << "," 
+            << transaction.getResultingBalance() 
+            << "\n";
+        }
     }
 
     file.close();
@@ -94,6 +102,25 @@ void Bank::loadFromFile(const std::string& filename) {
         std::getline(accountLine, balance, ',');
 
         createAccount(std::stoi(accNum), name, pin, std::stod(balance));
+
+        try {
+            while (std::getline(file, line) && !line.empty()) {
+                std::string type, amount, details, resultingBalance;
+
+                std::istringstream transactionLine(line);
+                std::getline(transactionLine, type, ',');
+                std::getline(transactionLine, amount, ',');
+                std::getline(transactionLine, details, ',');
+                std::getline(transactionLine, resultingBalance, ',');
+
+                Account* account = findAccount(std::stoi(accNum));
+                if (account) {
+                    account->addTransaction(Transaction(type, std::stod(amount), details, std::stod(resultingBalance)));
+                }
+            }
+        } catch (const std::exception& e) {
+            std::cerr << "Error parsing transaction data: " << e.what() << std::endl;
+        }
     }
     file.close();
 }

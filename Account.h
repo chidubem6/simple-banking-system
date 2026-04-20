@@ -31,6 +31,7 @@ class Account {
 
         void addTransaction(const Transaction& transaction);
         void showTransactionHistory() const;
+        const std::vector<Transaction>& getTransactionHistory() const { return transactionHistory; }
     
 };
 #endif
