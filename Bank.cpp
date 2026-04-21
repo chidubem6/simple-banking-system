@@ -102,36 +102,36 @@ void Bank::loadFromFile(const std::string& filename) {
             // try treating it as an account line
             int accNum = std::stoi(firstField);
             // parse remaining fields: name, pin, balance
+            std::string name, pin, balanceStr;
+            std::getline(ss, name, ',');
+            std::getline(ss, pin, ',');
+            std::getline(ss, balanceStr, ',');
+            double balance = std::stod(balanceStr);
             // call createAccount
+            createAccount(accNum, name, pin, balance);
             // set currentAccount = findAccount(accNum)
+            currentAccount = findAccount(accNum);
 
         } catch (std::exception& e) {
             // it's a transaction line
             // firstField is already the type
+            std::string type = firstField;
+            std::string amountStr, details, resultingBalanceStr;
+
             // parse: amount, details, resultingBalance
+            std::getline(ss, amountStr, ',');
+            std::getline(ss, details, ',');
+            std::getline(ss, resultingBalanceStr, ',');
+            double amount = std::stod(amountStr);
+            double resultingBalance = std::stod(resultingBalanceStr);
+
             // if currentAccount != nullptr, addTransaction
-        }
-    }
-
-        try {
-            while (std::getline(file, line) && !line.empty()) {
-                std::string type, amount, details, resultingBalance;
-
-                std::istringstream transactionLine(line);
-                std::getline(transactionLine, type, ',');
-                std::getline(transactionLine, amount, ',');
-                std::getline(transactionLine, details, ',');
-                std::getline(transactionLine, resultingBalance, ',');
-
-                Account* account = findAccount(std::stoi(accNum));
-                if (account) {
-                    account->addTransaction(Transaction(type, std::stod(amount), details, std::stod(resultingBalance)));
-                }
+            if (currentAccount) {
+                currentAccount->addTransaction(Transaction(type, amount, details, resultingBalance));
+            } else {
+                std::cerr << "Error: Transaction found without an associated account." << std::endl;
             }
-        } catch (const std::exception& e) {
-            std::cerr << "Error parsing transaction data: " << e.what() << std::endl;
         }
     }
-    
     file.close();
 }
