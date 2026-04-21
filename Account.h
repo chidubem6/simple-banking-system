@@ -26,8 +26,8 @@ class Account {
 
         bool verifyPin(const std::string& inputPin) const { return inputPin == pin; }
 
-        bool deposit(double amount);
-        bool withdraw(double amount);
+        bool deposit(double amount, const std::string& details = "Money deposited");
+        bool withdraw(double amount, const std::string& details = "Money withdrawn");
 
         void addTransaction(const Transaction& transaction);
         void showTransactionHistory() const;

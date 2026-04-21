@@ -1,24 +1,19 @@
 #include "Account.h"
 #include <iostream>
 
-bool Account::deposit(double amount) {
+bool Account::deposit(double amount, const std::string& details) {
     if (amount > 0) {
         balance += amount;
-        transactionHistory.push_back(
-            Transaction("Deposit", amount, "Money deposited", balance)
-        );
+        transactionHistory.push_back(Transaction("Deposit", amount, details, balance));
         return true;
     }
     return false;
 }
 
-bool Account::withdraw(double amount) {
+bool Account::withdraw(double amount, const std::string& details) {
     if (amount > 0 && amount <= balance) {
         balance -= amount;
-        transactionHistory.push_back(
-            Transaction("Withdrawal", amount, "Money withdrawn", balance)
-        );
-
+        transactionHistory.push_back(Transaction("Withdrawal", amount, details, balance));
         return true;
     }
     return false;
